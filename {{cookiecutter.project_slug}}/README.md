@@ -14,7 +14,3 @@
  - Free software: {{ cookiecutter.open_source_license }}
  - Documentation: https://{{ cookiecutter.project_slug | replace("_", "-") }}.readthedocs.io.
 {% endif %}
-
-# Credits
-
-Thanks to @audreyr for the [cookiecutter](https://github.com/audreyr/cookiecutter) project template we use.
