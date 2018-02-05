@@ -1,5 +1,6 @@
 {
     "company_name": "",
+    "github_username": null,
     "project_name": "project",
     "project_slug": "{{ cookiecutter.project_name.lower().replace(' ', '_').replace('-', '_') }}",
     "project_short_description": null,
