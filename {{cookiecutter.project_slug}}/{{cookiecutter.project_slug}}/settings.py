@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework.authtoken',
+    'corsheaders',
+    '{{cookiecutter.project_slug}}',
 ]
 
 MIDDLEWARE = [
@@ -118,3 +122,38 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+# Django Rest Framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        '{{cookiecutter.project_slug}}.authentication.TemporaryTokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.'
+                                'LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
+
+# CORS Header Django Rest Framework
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+
+# Temporary Token
+
+REST_FRAMEWORK_TEMPORARY_TOKENS = {
+    'MINUTES': 10,
+    'RENEW_ON_SUCCESS': True,
+    'USE_AUTHENTICATION_BACKENDS': False,
+}

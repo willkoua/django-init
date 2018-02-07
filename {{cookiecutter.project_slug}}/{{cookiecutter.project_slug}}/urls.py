@@ -16,6 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from .views import ObtainTemporaryAuthToken
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path(
+        'authentication',
+        ObtainTemporaryAuthToken.as_view(),
+        name='token_api'
+    ),
+    path(
+        'admin/', admin.site.urls
+    ),
 ]
