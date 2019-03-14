@@ -281,8 +281,7 @@ class UsersTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_user_activation_email(self, imailing):
+    def test_create_user_activation_email(self):
         """
         Ensure that the activation email is sent when user signs up.
         """
@@ -296,11 +295,6 @@ class UsersTests(APITestCase):
             'last_name': 'Norris',
             'gender': "M",
             'birthdate': "1999-11-11",
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "success",
         }
 
         response = self.client.post(
@@ -330,8 +324,8 @@ class UsersTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_user_activation_email_failure(self, imailing):
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    def test_create_user_activation_email_failure(self, send):
         """
         Ensure that the user is notified that no email was sent.
         """
@@ -345,11 +339,6 @@ class UsersTests(APITestCase):
             'last_name': 'Norris',
             'gender': "M",
             'birthdate': "1999-11-11",
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "failure",
         }
 
         response = self.client.post(
@@ -385,8 +374,8 @@ class UsersTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_user_auto_activate(self, imailing):
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    def test_create_user_auto_activate(self, services):
         """
         Ensure that the user is automatically activated.
         """
@@ -400,11 +389,6 @@ class UsersTests(APITestCase):
             'last_name': 'Norris',
             'gender': "M",
             'birthdate': "1999-11-11",
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "failure",
         }
 
         response = self.client.post(

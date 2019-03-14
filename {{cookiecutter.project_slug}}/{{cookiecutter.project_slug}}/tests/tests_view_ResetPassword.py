@@ -30,18 +30,12 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token(self, imailing):
+    def test_create_new_token(self):
         """
         Ensure we can have a new token to change our password
         """
         data = {
             'email': self.user.email,
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "success",
         }
 
         response = self.client.post(
@@ -70,8 +64,7 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_without_email_param(self, imailing):
+    def test_create_new_token_without_email_param(self):
         """
         Ensure we can't have a new token to change our password without
         give our email in param
@@ -107,8 +100,7 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_with_an_empty_email_param(self, imailing):
+    def test_create_new_token_with_an_empty_email_param(self):
         """
         Ensure we can't have a new token to change our password without
         give our email in param
@@ -146,8 +138,7 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_with_bad_email(self, imailing):
+    def test_create_new_token_with_bad_email(self):
         """
         Ensure we can't have a new token to change our password without
         a valid email
@@ -184,8 +175,7 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_with_non_existent_email(self, imailing):
+    def test_create_new_token_with_non_existent_email(self):
         """
         Ensure we can't have a new token to change our password without
         a valid email
@@ -222,8 +212,7 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_when_token_already_exist(self, imailing):
+    def test_create_new_token_when_token_already_exist(self):
         """
         Ensure we can have a new token to change our password
         """
@@ -235,11 +224,6 @@ class ResetPasswordTests(APITestCase):
 
         data = {
             'email': self.user.email,
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "success",
         }
 
         response = self.client.post(
@@ -269,18 +253,12 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_without_email_service(self, imailing):
+    def test_create_new_token_without_email_service(self):
         """
         Ensure we can have a new token to change our password
         """
         data = {
             'email': self.user.email,
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "success",
         }
 
         response = self.client.post(
@@ -309,18 +287,13 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{ cookiecutter.project_slug }}.views.IMailing')
-    def test_create_new_token_with_failure_on_email_service(self, imailing):
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    def test_create_new_token_with_failure_on_email_service(self, send):
         """
         Ensure we can have a new token to change our password
         """
         data = {
             'email': self.user.email,
-        }
-
-        instance_imailing = imailing.create_instance.return_value
-        instance_imailing.send_templated_email.return_value = {
-            "code": "failure",
         }
 
         response = self.client.post(
@@ -344,3 +317,4 @@ class ResetPasswordTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         self.assertTrue(len(tokens) == 1)
+

@@ -14,7 +14,9 @@ from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import JSONParser
 
-from imailing.Mailing import IMailing
+from . import services
+
+#from imailing.Mailing import IMailing
 
 from .models import (
     TemporaryToken, ActionToken,
@@ -107,7 +109,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 user.save()
 
             if settings.LOCAL_SETTINGS['EMAIL_SERVICE'] is True:
-                MAIL_SERVICE = settings.SETTINGS_IMAILING
+                MAIL_SERVICE = settings.ANYMAIL
                 FRONTEND_SETTINGS = settings.LOCAL_SETTINGS[
                     'FRONTEND_INTEGRATION'
                 ]
@@ -124,20 +126,17 @@ class UserViewSet(viewsets.ModelViewSet):
                     activate_token
                 )
 
-                # Send email with a SETTINGS_IMAILING
-                email = IMailing.\
-                    create_instance(MAIL_SERVICE["SERVICE"],
-                                    MAIL_SERVICE["API_KEY"])
-                response_send_mail = email.send_templated_email(
-                    email_from=MAIL_SERVICE["EMAIL_FROM"],
-                    template_id=MAIL_SERVICE["TEMPLATES"]["CONFIRM_SIGN_UP"],
-                    list_to=[request.data["email"]],
-                    context={
+                response_send_mail = services.send_mail(
+                    [user],
+                    {
                         "activation_url": activation_url,
-                        },
+                        "first_name": user.first_name,
+                        "last_name": user.last_name,
+                    },
+                    "CONFIRM_SIGN_UP",
                 )
 
-                if response_send_mail["code"] == "failure":
+                if response_send_mail:
                     content = {
                         'detail': _("The account was created but no email was "
                                     "sent. If your account is not "
@@ -239,7 +238,7 @@ class ResetPassword(APIView):
         )
 
         # Send the new token by e-mail to the user
-        MAIL_SERVICE = settings.SETTINGS_IMAILING
+        MAIL_SERVICE = settings.ANYMAIL
         FRONTEND_SETTINGS = settings.LOCAL_SETTINGS['FRONTEND_INTEGRATION']
 
         button_url = FRONTEND_SETTINGS['FORGOT_PASSWORD_URL'].replace(
@@ -247,21 +246,13 @@ class ResetPassword(APIView):
             str(token)
         )
 
-        email = IMailing.create_instance(
-            MAIL_SERVICE["SERVICE"],
-            MAIL_SERVICE["API_KEY"],
+        response_send_mail = services.send_mail(
+            [user],
+            {"forgot_password_url": button_url},
+            "FORGOT_PASSWORD",
         )
 
-        response_send_mail = email.send_templated_email(
-            email_from=MAIL_SERVICE["EMAIL_FROM"],
-            template_id=MAIL_SERVICE["TEMPLATES"]["FORGOT_PASSWORD"],
-            list_to=[user.email],
-            context={
-                "forgot_password_url": button_url,
-            },
-        )
-
-        if response_send_mail["code"] == "failure":
+        if response_send_mail:
             content = {
                 'detail': _("Your token has been created but no email "
                             "has been sent. Please contact the "
