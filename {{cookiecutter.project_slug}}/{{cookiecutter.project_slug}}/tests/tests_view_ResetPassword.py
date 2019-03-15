@@ -287,7 +287,8 @@ class ResetPasswordTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send',
+                return_value=0)
     def test_create_new_token_with_failure_on_email_service(self, send):
         """
         Ensure we can have a new token to change our password
@@ -317,4 +318,3 @@ class ResetPasswordTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
         self.assertTrue(len(tokens) == 1)
-

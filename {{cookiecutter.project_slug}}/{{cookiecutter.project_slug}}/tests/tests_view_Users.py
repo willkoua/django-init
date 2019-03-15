@@ -324,7 +324,8 @@ class UsersTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send',
+                return_value=0)
     def test_create_user_activation_email_failure(self, send):
         """
         Ensure that the user is notified that no email was sent.
@@ -374,7 +375,8 @@ class UsersTests(APITestCase):
             }
         }
     )
-    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send', return_value=0)
+    @mock.patch('{{cookiecutter.project_slug}}.services.EmailMessage.send',
+                return_value=0)
     def test_create_user_auto_activate(self, services):
         """
         Ensure that the user is automatically activated.

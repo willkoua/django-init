@@ -141,7 +141,8 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        '{{cookiecutter.project_slug}}.authentication.TemporaryTokenAuthentication',
+        '{{cookiecutter.project_slug}}.authentication.'
+        'TemporaryTokenAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
@@ -197,7 +198,9 @@ LOCAL_SETTINGS = {
     "EMAIL_SERVICE": False,
     "AUTO_ACTIVATE_USER": False,
     "FRONTEND_INTEGRATION": {
-        "ACTIVATION_URL": "example.com/activate?activation_token={% raw %}{{token}}{% endraw %}",
-        "FORGOT_PASSWORD_URL": "example.com/forgot_password?token={% raw %}{{token}}{% endraw %}",
+        "ACTIVATION_URL": "example.com/activate?activation_token="
+                          "{% raw %}{{token}}{% endraw %}",
+        "FORGOT_PASSWORD_URL": "example.com/forgot_password?token="
+                               "{% raw %}{{token}}{% endraw %}",
     },
 }

@@ -1,0 +1,24 @@
+language: python
+
+python:
+ - 3.6
+
+notifications:
+ email:
+  on_success: change
+  on_failure: change
+
+install:
+ - pip install coveralls
+ - pip install cookiecutter
+ - pip install pycodestyle
+
+script:
+ - printf 'FJNR\nsarahJeanneT\ntest1\n\n\n \n6\n' | cookiecutter .
+ - cd test1
+ - . env/bin/activate
+ - coverage run --source=. --omit=env/* manage.py test
+ - pycodestyle --config=.pycodestylerc ./ --exclude=./env/*,./test1/migrations/*
+
+after_success:
+ coveralls
