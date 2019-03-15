@@ -16,8 +16,6 @@ from rest_framework.parsers import JSONParser
 
 from . import services
 
-#from imailing.Mailing import IMailing
-
 from .models import (
     TemporaryToken, ActionToken,
 )

@@ -184,25 +184,11 @@ ANYMAIL = {
     'TEMPLATES': {
         'CONFIRM_SIGN_UP': 'example_id',
         'FORGOT_PASSWORD': 'example_id',
-        'RESERVATION_CANCELLED': 'example_id',
     },
 }
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # This 'FROM' email is not used with SendInBlue templates
 DEFAULT_FROM_EMAIL = 'noreply@example.org'
-
-
-# Django email service. Used for administrative emails.
-
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'example@gmail.com'
-EMAIL_HOST_PASSWORD = 'password'
-EMAIL_PORT = 587
-# Email addresses to notify in case of error
-ADMINS = ""
-SERVER_EMAIL = 'example@gmail.com'
-SUPPORT_EMAIL = 'admin@fjnr.ca'
 
 # User specific settings
 
