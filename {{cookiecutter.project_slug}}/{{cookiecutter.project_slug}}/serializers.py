@@ -2,11 +2,11 @@ import re
 
 from django.contrib.auth import get_user_model, password_validation
 from django.core.exceptions import ValidationError
+from django.contrib.auth import authenticate
 from django.utils.translation import ugettext_lazy as _
 
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from rest_framework.compat import authenticate
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 from .models import (

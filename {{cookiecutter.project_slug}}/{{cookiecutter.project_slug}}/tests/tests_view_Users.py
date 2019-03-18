@@ -118,7 +118,7 @@ class UsersTests(APITestCase):
         content = {
             'birthdate': [
                 'Date has wrong format. Use one of these formats instead: '
-                'YYYY[-MM[-DD]].'
+                'YYYY-MM-DD.'
             ],
             'first_name': ['This field may not be blank.'],
             'gender': ['"" is not a valid choice.'],
@@ -201,7 +201,7 @@ class UsersTests(APITestCase):
         content = {
             'birthdate': [
                 'Date has wrong format. Use one of these formats instead: '
-                'YYYY[-MM[-DD]].'
+                'YYYY-MM-DD.'
             ],
             'gender': ['"invalid_gender" is not a valid choice.'],
         }
