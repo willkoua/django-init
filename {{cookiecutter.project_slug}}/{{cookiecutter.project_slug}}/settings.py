@@ -187,7 +187,7 @@ ANYMAIL = {
         'FORGOT_PASSWORD': 'example_id',
     },
 }
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'anymail.backends.sendinblue.EmailBackend'
 # This 'FROM' email is not used with SendInBlue templates
 DEFAULT_FROM_EMAIL = 'noreply@example.org'
 
