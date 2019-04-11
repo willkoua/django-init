@@ -1,3 +1,6 @@
+import coreapi as coreapi
+import coreschema as coreschema
+
 from django.contrib.auth import get_user_model, password_validation
 from django.conf import settings
 from django.utils import timezone
@@ -13,6 +16,7 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.parsers import JSONParser
+from rest_framework.schemas import ManualSchema
 
 from . import services
 
@@ -331,6 +335,30 @@ class ObtainTemporaryAuthToken(ObtainAuthToken):
     """
     model = TemporaryToken
     parser_classes = (JSONParser,)
+    if coreapi is not None and coreschema is not None:
+        schema = ManualSchema(
+            fields=[
+                coreapi.Field(
+                    name="login",
+                    required=True,
+                    location='form',
+                    schema=coreschema.String(
+                        title="Login",
+                        description="Valid email for authentication",
+                    ),
+                ),
+                coreapi.Field(
+                    name="password",
+                    required=True,
+                    location='form',
+                    schema=coreschema.String(
+                        title="Password",
+                        description="Valid password for authentication",
+                    ),
+                ),
+            ],
+            encoding="application/json",
+        )
 
     def get_serializer(self):
         return AuthTokenSerializer()
