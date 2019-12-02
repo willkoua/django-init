@@ -80,7 +80,8 @@ celerybeat-schedule
 *.sage.py
 
 # dotenv
-.env
+#.env
+#.env.docker
 
 # virtualenv
 .venv
@@ -102,3 +103,13 @@ ENV/
 
 # Database
 *.sqlite3
+
+# IDE
+.idea
+.DS_Store
+
+# Python bytecode
+__pycache__
+
+# Django dynamic directories
+logs

@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Init virtualenv and install requirements
-virtualenv -p python3 env
-. env/bin/activate
-pip install -r requirements.txt
-pip install -r requirements-dev.txt
+docker-compose build
 
-# Init SQLite database
-python manage.py makemigrations {{cookiecutter.project_slug}}
-python manage.py migrate
+docker-compose run api python manage.py migrate

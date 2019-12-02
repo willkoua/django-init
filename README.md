@@ -16,6 +16,8 @@ company_name []:
 ...
 ```
 
+uncomment ```.env.example``` and ```.env.docker.example``` lines to ```.gitignore``` file
+
 ## Credits
 
 Thanks to @audreyr for the [cookiecutter](https://github.com/audreyr/cookiecutter) project template we use.
